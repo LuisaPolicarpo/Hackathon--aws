@@ -19,10 +19,7 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 import io 
-import streamlit as st 
-import pandas as pd
-from sklearn.neighbors import NearestNeighbors
-from sklearn.model_selection import train_test_split
+
 
 #FALTAAAA MUDAR A BASE DE DADOSS!!!!!!!!
 st.set_page_config(page_title="Datathon", page_icon="🗼", layout="wide", menu_items=None)
