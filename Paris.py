@@ -24,10 +24,11 @@ import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 from sklearn.model_selection import train_test_split
 
-#FALTAAAA MUDAR A BASE DE DADOSS!!!!!!!!
+
 st.set_page_config(page_title="Datathon", page_icon="🗼", layout="wide", menu_items=None)
 
-df_final_2 = pd.read_csv("C:/Users/luisa/Downloads/df_final (2).csv",compression= 'zip')
+# df_final_2 = pd.read_csv("C:/Users/luisa/Downloads/df_final (2).csv",compression= 'zip')
+df_final_2 = pd.read_csv('df_final.csv', compression = 'zip')
 condition1 = df_final_2['nombre_pieces_principales'] > 0 
 condition11 =  df_final_2['nombre_pieces_principales'] < 8 
 condition111 =df_final_2['surface_reelle_bati'] < 110
