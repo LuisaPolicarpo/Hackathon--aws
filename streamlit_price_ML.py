@@ -7,3 +7,6 @@ import seaborn as sns
 st.set_page_config(page_title="Data Readers_app", layout="wide", menu_items=None)
 st.title('Hello')
 
+pd.read_csv('df_dummies2.csv')
+st.table(df_dummies2.head())
+
