@@ -14,7 +14,7 @@ The goal of this project was to perform exhaustive EDA on the housing market for
  This solution is presented in the form of an online application.
 
 ### Data:
-- The data was gathered from the french government (https://www.data.gouv.fr/fr/datasets/5c4ae55a634f4117716d5656) and considers all transactions from 2019 to 2022. 
+- The data was gathered from the french government (https://www.data.gouv.fr/fr/datasets/5c4ae55a634f4117716d5656) and considers all housing transactions from 2019 to 2022. 
 
 ### Technology:
 - EDA: Pandas library. 
