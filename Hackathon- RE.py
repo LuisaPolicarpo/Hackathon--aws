@@ -186,7 +186,7 @@ elif choose == "Neighborhood recomendation":
     y1 = dft01['valeur_fonciere']
     X_train1, X_test1, y_train1, y_test1 = train_test_split(X1, y1, test_size=0.2, random_state=7)
 
-# Functions
+# Functions - Price Recommendation
     def predict_house_price0(sqm, rooms, model, X_train0):
         model.fit(X_train0, y_train0)
         data = {'surface_reelle_bati': sqm, 'nombre_pieces_principales': rooms}
