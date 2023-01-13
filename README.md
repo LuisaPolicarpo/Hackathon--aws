@@ -20,3 +20,4 @@ The goal of this project was to perform exhaustive EDA on the housing market for
 - EDA: Pandas library. 
 - Machine Learning: NearestNeighbors algorithm for the district recommendation engine and LinearRegression for the price prediction. 
 - Application - user interface: Streamlit. 
+- AWS: Leveraged Amazon Web Services to check and improve code quality. 
