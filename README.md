@@ -18,5 +18,5 @@ The goal of this project was to perform exhaustive EDA on the housing market for
 
 ### Technology:
 - EDA: Pandas library. 
-- Machine Learning: NearestNeighboors algorithm for the district recommendation engine and LinearRegression for the price prediction. 
+- Machine Learning: NearestNeighbors algorithm for the district recommendation engine and LinearRegression for the price prediction. 
 - Application - user interface: Streamlit. 
