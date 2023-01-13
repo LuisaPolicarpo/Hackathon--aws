@@ -195,8 +195,8 @@ elif choose == "Neighborhood recomendation":
         df = pd.get_dummies(df)
         missing_cols = set(X_train0.columns) - set(df.columns)
     
-        for c in missing_cols:
-            df[c] = X_train0[c].median()
+        for col in missing_cols:
+            df[col] = X_train0[col].median()
         df = df[X_train0.columns]
    
         prediction = model.predict(df)
@@ -210,8 +210,8 @@ elif choose == "Neighborhood recomendation":
         df = pd.get_dummies(df)
         missing_cols = set(X_train1.columns) - set(df.columns)
     
-        for c in missing_cols:
-            df[c] = X_train1[c].median()
+        for col in missing_cols:
+            df[col] = X_train1[col].median()
         df = df[X_train1.columns]
    
         prediction = model.predict(df)
