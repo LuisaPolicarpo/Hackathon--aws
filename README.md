@@ -1,6 +1,6 @@
 # Hackathon--AWS
 
-## Content:
+## Content
 Welcome to our 3 day hackathon (datathon) sponsored by Amazon Web Services as part of our Data Analysis bootcamp at Wild Code School! 
 The goal of this project was to perform exhaustive EDA on the housing market for the Ile-de-France (France) region and design leverage Machine Learning technology to predict house prices. 
 
