@@ -110,7 +110,7 @@ if choose == "Appartement vs Maison":
                 ax4.set_xlabel('.')
                 st.pyplot(fig2)
     with col7:
-                fig3, ax3 = plt.subplots(figsize=(10, 8))
+                fig3, ax3 = plt.subplots(figsize=(8, 6))
                 sns.boxplot(data=df_apt, x="surface_reelle_bati", color='darkblue')
                 plt.title("Surface")
                 ax3.set_xlabel('.')
@@ -128,7 +128,7 @@ if choose == "Appartement vs Maison":
                 ax6.set_xlabel('.')
                 st.pyplot(fig6)
     with col8:
-                fig9, ax8 = plt.subplots(figsize=(10, 8))
+                fig9, ax8 = plt.subplots(figsize=(8, 6))
                 sns.boxplot(data=df_mai, x="surface_reelle_bati", color='red')
                 # ax8.set_xlabel('Surface')
                 plt.title("Surface")
