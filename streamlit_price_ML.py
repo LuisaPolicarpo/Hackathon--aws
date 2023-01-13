@@ -12,13 +12,20 @@ st.set_page_config(page_title="Data Readers_app", layout="wide", menu_items=None
 st.title('Hello')
 
 df_dummies2 = pd.read_csv('df_dummies2.csv', compression = 'zip')
+
+#rename column 'Local industriel. commercial ou assimilé'
+df_dummies2.rename(columns={'Local industriel. commercial ou assimilé' : 'Local_industriel_commercial_ou_assimilé', 'Vente en l\'état futur d\'achèvement' : 'Vente_en_létat_futur_dachèvement', 'Vente terrain à bâtir' : 'Vente_terrain_à_bâtir'}, inplace = True)
+
+#converto to float
+pd.to_numeric(df_dummies2['surface_reelle_bati'], errors="ignore")
+
 st.table(df_dummies2.head())
 
 # Train-test-split
 X = df_dummies2[['surface_reelle_bati', 'nombre_pieces_principales', 'Appartement',
-       'Local industriel. commercial ou assimilé', 'Maison', 'Adjudication',
+       'Local_industriel_commercial_ou_assimilé', 'Maison', 'Adjudication',
        'Echange', 'Expropriation', 'Vente',
-       'Vente en l\'état futur d\'achèvement', 'Vente terrain à bâtir', 'code_commune_fact']]
+       'Vente_en_létat_futur_dachèvement', 'Vente_terrain_à_bâtir', 'code_commune_fact']]
 y = df_dummies2['valeur_fonciere']
 
 # We set the size of the train set to 75%. And the rest is for the test set.
@@ -34,11 +41,11 @@ model_lr.fit(X_train, y_train)
 print(model_lr.score(X_train, y_train))
 print(model_lr.score(X_test, y_test))
 
-#predict values
-y_pred = model_lr.predict(X_test)
+# #predict values
+# y_pred = model_lr.predict(X_test)
 
-df_predict = pd.DataFrame({'actual': y_test, 'predicted': y_pred})
-st.table(df_predict.head())
+# df_predict = pd.DataFrame({'actual': y_test, 'predicted': y_pred})
+# st.table(df_predict.head())
 
 #user inputs
 # island = st.selectbox('Penguin Island', options=['Biscoe', 'Dream', 'Torgerson']) 
@@ -48,16 +55,45 @@ st.table(df_predict.head())
 # flipper_length = st.number_input('Flipper Length (mm)', min_value=0) 
 # body_mass = st.number_input('Body Mass (mm)', min_value=0)
 
-values = st.slider(
+surface_reelle_bati = st.slider(
     'Select a range of values for the m2',
-    30.5, 147.5, (50.0, 100.0))
-st.write('Values:', values)
+    0.0, 1000.0, (50.0, 100.0))
+st.write('Values:', surface_reelle_bati)
 
-nombre_pieces_principales = st.selectbox('nombre_pieces_principales', options=[1, 2, 3, 4, 5, 6])
+nombre_pieces_principales = st.number_input('nombre_pieces_principales', min_value=0) 
 
-type_local = st.selectbox('type_local', options=['Appartement', 'Local industriel. commercial ou assimilé', 'Maison'])
+type_local = st.selectbox('type_local', options=['Appartement', 'Local_industriel_commercial_ou_assimilé', 'Maison'])
 
-type_local = st.selectbox('type_local', options=['Appartement', 'Local industriel. commercial ou assimilé', 'Maison'])
+nature_mutation = st.selectbox('nature_mutation', options=['Adjudication', 'Echange', 'Expropriation', 'Vente', 'Vente_en_létat_futur_dachèvement', 'Vente terrain à bâtir'])
+    
+def predict(surface_reelle_bati, nombre_pieces_principales, type_local, nature_mutation):
+    #Predicting the price
+    Appartement == int(type_local == 'Appartement')
+    Local_industriel_commercial_ou_assimilé == int(type_local == 'Local_industriel_commercial_ou_assimilé')
+    type_local == int(type_local == 'Maison')
+    
+    
+    Adjudication = int(nature_mutation == 'Adjudication')     
+    Echange = int(nature_mutation == 'Echange')    
+    Expropriation == nature_mutation == 'Expropriation'    
+    Vente == int(nature_mutation == 'Vente')     
+    Vente_en_létat_futur_dachèvement == int(nature_mutation == 'Vente_en_létat_futur_dachèvement')    
+    Vente_terrain_à_bâtir == int(nature_mutation == 'Vente_terrain_à_bâtir')     
 
+    prediction = model_lr.predict(
+        
+        pd.DataFrame([['surface_reelle_bati', 'nombre_pieces_principales', 'Appartement',
+       'Local_industriel_commercial_ou_assimilé', 'Maison', 'Adjudication',
+       'Echange', 'Expropriation', 'Vente',
+       'Vente_en_létat_futur_dachèvement', 'Vente_terrain_à_bâtir', 'code_commune_fact']], columns=['surface_reelle_bati', 'nombre_pieces_principales', 'Appartement',
+       'Local_industriel_commercial_ou_assimilé', 'Maison', 'Adjudication',
+       'Echange', 'Expropriation', 'Vente',
+       'Vente_en_létat_futur_dachèvement', 'Vente_terrain_à_bâtir', 'code_commune_fact']))
+    
+    return st.table(prediction)
 
-
+if st.button('Predict Price'):
+    price = predict(surface_reelle_bati, nombre_pieces_principales, type_local, nature_mutation)
+    st.success(f'The predicted price of the diamond is ${price[0]:.2f} €')
+    
+# new_prediction = model_lr.predict([[surface_reelle_bati, nombre_pieces_principales, type_local, nature_mutation]])
