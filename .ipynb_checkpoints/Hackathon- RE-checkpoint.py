@@ -20,17 +20,19 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 
-st.set_page_config(page_title="Datathon", page_icon="🗼", layout="wide", menu_items=None)
+st.set_page_config(page_title="Datathon", page_icon="🔎", layout="wide", menu_items=None)
 ### Load the datasets
 df_dummies2 = pd.read_csv('df_dummies2.csv', compression='zip')
 df = pd.read_csv('df_final.csv', compression = 'zip')
+# df_final2 = pd.read_csv('LP_df_final.csv')
+df_final4 = df.dropna(subset=['valeur_fonciere'])
+df_final0= df_final4.fillna(0)
+condition1 = df_final0['nombre_pieces_principales'] > 1 
+condition11 =  df_final0['nombre_pieces_principales'] < 7 
+condition111 =df_final0['surface_reelle_bati'] < 147.5
+condition1111 =df_final0['surface_reelle_bati'] > 30.5
 
-condition1 = df['nombre_pieces_principales'] > 1 
-condition11 =  df['nombre_pieces_principales'] < 7 
-condition111 =df['surface_reelle_bati'] < 147.5
-condition1111 =df['surface_reelle_bati'] > 30.5
-
-df_final2 = df[condition1 & condition11 & condition111 & condition1111][['id_mutation','surface_reelle_bati','nombre_pieces_principales','type_local','nature_mutation','nom_commune','code_departement','valeur_fonciere','longitude', 'latitude','date_mutation']]
+df_final2 = df_final0[condition1 & condition11 & condition111 & condition1111][['id_mutation','surface_reelle_bati','nombre_pieces_principales','type_local','nature_mutation','nom_commune','code_departement','valeur_fonciere','longitude', 'latitude','date_mutation']]
 df_final2[['year','month','day']] = df_final2.date_mutation.str.split("-", expand=True)
 df_final2['price_m2'] = df_final2['valeur_fonciere']/df_final2['surface_reelle_bati']
 df_apt = df_final2[df_final2['type_local']=='Appartement']
@@ -81,7 +83,7 @@ if choose == "Appartement vs Maison":
         st.pyplot(fig)
     with col32:
         fig32, ax32 = plt.subplots(figsize=(6, 4))
-        sns.lineplot(data=df_final2, x="year", y="price_m2", hue="type_local", palette=['red', 'blue'])
+        sns.lineplot(data=df_final2, x="year", y="price_m2", hue="type_local", palette=['red', 'darkblue'])
         plt.title("Price per m2")
         ax32.set_xlabel('Year')
         ax32.set_ylabel('m2')
@@ -93,36 +95,39 @@ if choose == "Appartement vs Maison":
 
     st.plotly_chart(fig33)
     
-    type = st.radio('  ' , options = ['Appartement', 'Maison'])  
+#     type = st.radio('  ' , options = ['Appartement', 'Maison'])  
         
 
-    if type == 'Appartement':
-       
-        col5, col7= st.columns(2)
+#     if type == 'Appartement':
+    st.header('Appartement')
+    col5, col7= st.columns(2)
 
-        with col5:
+    with col5:
                 fig2, ax4 = plt.subplots(figsize=(10, 8))
-                sns.boxplot(data=df_apt, x="nombre_pieces_principales", color='darkblue')
+                df_apt_2= df_apt.sort_values(by='nombre_pieces_principales', ascending=True)
+                sns.histplot(data=df_apt_2, x=df_apt_2["nombre_pieces_principales"].astype(str), color='darkblue')
                 plt.title("Pieces Principales")
                 ax4.set_xlabel('.')
                 st.pyplot(fig2)
-        with col7:
+    with col7:
                 fig3, ax3 = plt.subplots(figsize=(10, 8))
                 sns.boxplot(data=df_apt, x="surface_reelle_bati", color='darkblue')
                 plt.title("Surface")
                 ax3.set_xlabel('.')
                 st.pyplot(fig3)
 
-    if type == 'Maison':
-            col6, col8= st.columns(2)
+    # if type == 'Maison':
+    st.header('Maison')
+    col6, col8= st.columns(2)
 
-            with col6:
+    with col6:
                 fig6, ax6 = plt.subplots(figsize=(10, 8))
-                sns.boxplot(data=df_mai, x="nombre_pieces_principales", color='red')
+                df_final_mai_2= df_mai.sort_values(by='nombre_pieces_principales', ascending=True)
+                sns.histplot(data=df_final_mai_2, x=df_final_mai_2["nombre_pieces_principales"].astype(str), color='red')
                 plt.title("Pieces Principales")
                 ax6.set_xlabel('.')
                 st.pyplot(fig6)
-            with col8:
+    with col8:
                 fig9, ax8 = plt.subplots(figsize=(10, 8))
                 sns.boxplot(data=df_mai, x="surface_reelle_bati", color='red')
                 # ax8.set_xlabel('Surface')
